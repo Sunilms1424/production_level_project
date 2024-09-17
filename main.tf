@@ -57,7 +57,7 @@ resource "aws_internet_gateway" "myigw" {
 resource "aws_route_table" "mypublic-route-table"{
   vpc_id = aws_vpc.myvpc.id
   tags = {
-    Name = "mypublic-route-table"
+    Name = var.public_route_table
   }
   route  {
     cidr_block = var.cidr_block_igw
@@ -68,14 +68,14 @@ resource "aws_route_table" "mypublic-route-table"{
 resource "aws_route_table" "myprivate-route-table-1" { 
   vpc_id = aws_vpc.myvpc.id
   tags = {
-    Name = "myprivate-route-table-1"
+    Name = var.private_route_table_1
   }
 }
 #creating the route table for private subnets 2
 resource "aws_route_table" "myprivate-route-table-2" {
   vpc_id = aws_vpc.myvpc.id
   tags = {
-    Name = "myprivate-route-table-2"
+    Name = var.private_route_table_2
   } 
 }
 #creating the route table association for public subnets
@@ -94,4 +94,41 @@ resource "aws_route_table_association" "aws-route-table-association-privatesubne
 resource "aws_route_table_association" "aws-route-table-assocation-privatesubnet2" {
   route_table_id = aws_route_table.myprivate-route-table-2.id
   subnet_id = aws_subnet.myprivate-subnet-2.id
+}
+
+# #creating nat gateway
+resource "aws_nat_gateway" "nat-gateway-privatesubnet1" {
+    subnet_id = aws_subnet.myprivate-subnet-1.id
+}
+resource "aws_nat_gateway" "nat-gateway-privatesubnet2" {
+    subnet_id = aws_subnet.myprivate-subnet-2.id
+}
+
+#creating a template
+resource "aws_instance" "ec2-instance-privatesubnet1" {
+    ami = var.ami
+    instance_type = var.instance_type
+    key_name = var.key_name
+    subnet_id = aws_subnet.myprivate-subnet-1.id
+    tags = {
+      Name = var.aws_instance_1
+    }
+}
+resource "aws_instance" "ec2-instance-privatesubnet2" {
+  ami = var.ami
+  instance_type = var.instance_type
+  key_name = var.key_name
+  subnet_id = aws_subnet.myprivate-subnet-2.id
+  tags = {
+    Name = var.aws_instance_2
+   }
+}
+resource "aws_instance" "ec2-instance-publicsubnet1" {
+  ami = var.ami
+  instance_type = var.instance_type
+  key_name = var.key_name
+  subnet_id = aws_subnet.mypublic-subnet-1.id
+  tags = {
+    Name = var.aws_instance_3
+   }
 }

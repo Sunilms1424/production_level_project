@@ -42,3 +42,37 @@ variable "cidr_block_igw" {
   description = "the value of cidr block for route a traffic"
   type = string
 }
+variable "public_route_table" {
+  type = string
+}
+variable "private_route_table_1" {
+  type = string
+}
+variable "private_route_table_2" {
+  type = string
+}
+
+variable "ami" {
+  description = "the value of ami id"
+  type = string
+}
+variable "instance_type" {
+  description = "the value of instance_type"
+  type = string
+}
+variable "key_name" {
+  description = "the value of key_name"
+  type = string
+}
+variable "aws_instance_1" {
+  description = "the value of aws_ instance_1"
+  type = string
+}
+variable "aws_instance_2" {
+  description = "the value of aws_instance_2"
+  type = string
+}
+variable "aws_instance_3" {
+  description = "the value of aws_instance_3"
+  type = string
+}

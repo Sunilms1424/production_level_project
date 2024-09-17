@@ -5,7 +5,7 @@ provider "aws" {
 resource "aws_vpc" "myvpc" {
     cidr_block = var.cidr
   tags = {
-    Name="myvpc1"
+    Name=var.aws_vpc_name
   }
 }
 #creating public-subnet-1
@@ -15,7 +15,7 @@ resource "aws_subnet" "mypublic-subnet-1" {
     map_public_ip_on_launch = true
     availability_zone = "us-east-1a"
     tags = {
-      Name = "mypublic-subnet-1"
+      Name = var.public_subnet1_name
     }
 }
 #creating private-subnet-1
@@ -24,7 +24,7 @@ resource "aws_subnet" "myprivate-subnet-1" {
     cidr_block = var.cidr_block_private_subnet_1
     availability_zone = "us-east-1a"
     tags = {
-      Name = "myprivate-subnet-2"
+      Name = var.privatesubnet1_subnet1_name
     }
 }
 #creating public-subnet-2
@@ -34,7 +34,7 @@ resource "aws_subnet" "mypublic-subnet-2" {
   availability_zone = "us-east-1b"
   map_public_ip_on_launch = true
   tags = {
-    Name = "mypublic-subnet-2"
+    Name = var.public_subnet2_name
   }
 }
 #creating private-subnet-2
@@ -43,7 +43,7 @@ resource "aws_subnet" "myprivate-subnet-2" {
     cidr_block = var.cidr_block_private_subnet_2
     availability_zone = "us-east-1b"
     tags = {
-      Name = "myprivate-subnet-2"
+      Name = var.privatesubnet2_subnet2_name
     }
 }
 # creating igw
